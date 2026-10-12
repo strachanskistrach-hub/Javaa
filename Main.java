@@ -10,6 +10,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+
 public class MainActivity extends AppCompatActivity {
     EditText editName = findViewById(R.id.name);
     EditText editSurname = findViewById(R.id.surname);
@@ -71,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         if(email.contains("@") || email.contains(".")){
             Toast.makeText(
                     this,
-                    "Email jest nie poprawny!",
+                    "Email jest nie poprawny",
                     Toast.LENGTH_SHORT
             ).show();
             return false;
@@ -87,6 +91,28 @@ public class MainActivity extends AppCompatActivity {
         };
         return false;
     }
-
-
+    
+    private void saveToFile(){
+        
+        String name = editName.getText().toString().trim();
+        String surname = editSurname.getText().toString().trim();
+        String email = editEmail.getText().toString().trim();
+        String password = editPassword.getText().toString().trim();
+        
+        String data = "\nImie: " + name+
+                "\nNazwisko: " + surname+
+                "\nEmail: " + email+
+                "\nhaslo: " + password;
+        
+        try (FileOutputStream fos = openFileOutput(
+                "dane.txt",
+                MODE_APPEND
+        )) {
+            fos.write(data.getBytes(StandardCharsets.UTF_8));
+        }catch (IOException e){
+            Toast.makeText(
+                    this, "Błąd zapsiu",Toast.LENGTH_SHORT
+            ).show();
+        }
+    }
 }
