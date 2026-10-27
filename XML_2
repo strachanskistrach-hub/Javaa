@@ -52,7 +52,6 @@
         android:gravity="top|start"
         android:hint="Treść pliku"
         android:inputType="textMultiLine"
-        android:gravity="top|start"
         android:scrollbars="vertical" />
 
     <LinearLayout
